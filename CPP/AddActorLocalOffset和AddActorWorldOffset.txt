@@ -1,0 +1,7 @@
+
+	FVector Offset = FVector(1,0,0);
+
+	FHitResult HitResult;
+
+	AddActorLocalOffset(Offset, false, &HitResult);
+	AddActorWorldOffset(Offset, false, &HitResult);

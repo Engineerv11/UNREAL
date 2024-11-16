@@ -1,0 +1,35 @@
+
+
+    DECLARE_MULTICAST_DELEGATE_OneParam(TestOneParamMulti, FString);
+
+    TestOneParamMulti OneParamMulti;
+
+	UFUNCTION()
+		void OnOneParamMultiA(FString Text);
+	UFUNCTION()
+		void OnOneParamMultiB(FString Text);
+	UFUNCTION()
+		void OnOneParamMultiC(FString Text);
+
+    void ADelegateActor::OnOneParamMultiA(FString Text)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("OneParamMultiA %s"), *Text));
+    }
+
+    void ADelegateActor::OnOneParamMultiB(FString Text)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("OneParamMultiB %s"), *Text));
+    }
+
+    void ADelegateActor::OnOneParamMultiC(FString Text)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("OneParamMultiC %s"), *Text));
+    }
+
+	OneParamMulti.AddUObject(this, &ADelegateActor::OnOneParamMultiA);
+	OneParamMulti.AddUObject(this, &ADelegateActor::OnOneParamMultiA);
+	OneParamMulti.AddUObject(this, &ADelegateActor::OnOneParamMultiA);
+	OneParamMulti.AddUObject(this, &ADelegateActor::OnOneParamMultiB);
+	OneParamMulti.AddUObject(this, &ADelegateActor::OnOneParamMultiC);
+
+	OneParamMulti.Broadcast("OnOneParamMulti");

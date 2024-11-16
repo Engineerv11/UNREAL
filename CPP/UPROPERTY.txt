@@ -1,0 +1,16 @@
+UPROPERTY(EditAnywhere,BlueprintReadWrite,meta = (DisplayName = "xxxxx"))
+int64 value;
+
+////////////////////////////////////////////////////////////////////////////////
+
+UPROPERTY用于将C++类的成员暴露给蓝图，控制了在蓝图中，只读，只写，分类，在任何地方编辑，只在实例化细节面板编辑
+
+EditAnywhere | BlueprintReadOnly | BlueprintReadWrite | ...
+
+meta = (DisplayName = "xxxxx") 控制了在面板中显示的名称
+
+meta = (EditCondition = "Is____") 使用C++变量Is___控制此变量在蓝图参数面板中是否可编辑
+
+meta = (ToolTip = "在此解释此变量") 设置在面板中对变量的解释
+
+////////////////////////////////////////////////////////////////////////////////

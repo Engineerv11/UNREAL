@@ -1,0 +1,56 @@
+UFUNCTION(BlueprintCallable,BlueprintPure,Category="Value")
+void SetValue();
+
+////////////////////////////////////////////////////////////////////////////////
+
+BlueprintCallable
+使得C++函数可以在蓝图中调用
+
+BlueprintPure
+纯虚函数的定义
+
+Category="Value"
+函数在蓝图搜索中显示的折叠分类
+
+////////////////////////////////////////////////////////////////////////////////
+
+UFUNCTION(BlueprintImplementableEvent)
+void Action();
+
+表示C++只能声明此函数，不能实现，只能由蓝图实现
+
+可以重载
+
+UFUNCTION(BlueprintImplementableEvent)
+void Action(int value);
+
+无返回值的函数在蓝图中重载是以事件的形式存在
+
+UFUNCTION(BlueprintImplementableEvent)
+int Action();
+
+有返回值的函数在蓝图中重载是以函数的形式存在
+
+////////////////////////////////////////////////////////////////////////////////
+
+UFUNCTION(BlueprintNativeEvent)
+int Action();
+
+使用C++声明和实现，蓝图可以重载，或不重载
+
+函数的声明
+UFUNCTION(BlueprintNativeEvent)
+int Action();
+函数的实现需要加上"_Implementation"，否则无法成功编译
+int Actor::Action_Implementation()
+{
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+UFUNCTION(BlueprintNativeEvent,meta = (DisplayName = "ActionNew"))
+int Action();
+
+在蓝图中，无法查找到Action，请使用ActionNew
+
+////////////////////////////////////////////////////////////////////////////////

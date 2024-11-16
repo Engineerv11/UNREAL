@@ -1,0 +1,19 @@
+USTRUCT(BlueprintType)
+struct FVehicleStatus
+{
+    GENERATED_USTRUCT_BODY()
+    
+    UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VehicleInfo")
+    int32 Speed;
+    UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="VehicleInfo")
+    int32 Mode;
+    ...
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+声明类的成员
+UPROPERTY(EditAnywhere,BlueprintReadWrite)
+FVehicleStatus VehicleStatus;
+
+////////////////////////////////////////////////////////////////////////////////

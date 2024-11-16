@@ -1,0 +1,111 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "DelegateActor.generated.h"
+
+DECLARE_DELEGATE(TestNoParam);
+DECLARE_DELEGATE_OneParam(TestOneParam, FString);
+DECLARE_DELEGATE_TwoParams(TestTwoParams, FString, int32);
+DECLARE_DELEGATE_ThreeParams(TestThreeParams, FString, int32, float);
+DECLARE_DELEGATE_RetVal(FString, TestRetVal);
+
+UCLASS()
+class BATTLEFIELD_API ADelegateActor : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	// Sets default values for this actor's properties
+	ADelegateActor();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	TestNoParam NoParam;
+	TestOneParam OneParam;
+	TestTwoParams TwoParams;
+	TestThreeParams ThreeParams;
+	TestRetVal RetVal;
+
+	void OnNoParam();
+	void OnOneParam(FString Text);
+	void OnTwoParams(FString Text, int32 Int32Value);
+	void OnThreeParams(FString Text, int32 Int32Value, float FloatValue);
+	FString OnRetVal();
+
+};
+
+
+
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "DelegateActor.h"
+
+// Sets default values
+ADelegateActor::ADelegateActor()
+{
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
+	NoParam.BindUObject(this,&ADelegateActor::OnNoParam);
+	OneParam.BindUObject(this, &ADelegateActor::OnOneParam);
+	TwoParams.BindUObject(this, &ADelegateActor::OnTwoParams);
+	ThreeParams.BindUObject(this, &ADelegateActor::OnThreeParams);
+	RetVal.BindUObject(this, &ADelegateActor::OnRetVal);
+
+}
+
+// Called when the game starts or when spawned
+void ADelegateActor::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	NoParam.ExecuteIfBound();
+	OneParam.ExecuteIfBound(TEXT("1"));
+	TwoParams.ExecuteIfBound(TEXT("2"),10);
+	ThreeParams.ExecuteIfBound(TEXT("2"), 10, 15.3);
+	FString Text = RetVal.Execute();
+}
+
+// Called every frame
+void ADelegateActor::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
+void ADelegateActor::OnNoParam()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("NoParam"));
+}
+
+void ADelegateActor::OnOneParam(FString Text)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("OneParam %s"), *Text));
+}
+
+void ADelegateActor::OnTwoParams(FString Text, int32 Int32Value)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("TwoParam %s %d"), *Text, Int32Value));
+}
+
+void ADelegateActor::OnThreeParams(FString Text, int32 Int32Value, float FloatValue)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("ThreeParam %s %d %f"), *Text, Int32Value, FloatValue));
+}
+
+FString ADelegateActor::OnRetVal()
+{
+	FString Text = FString::Printf(TEXT("RetVal"));
+	return FString();
+}
+

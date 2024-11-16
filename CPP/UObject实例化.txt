@@ -1,0 +1,62 @@
+////////////////////////////////////////////////////////////////////////////////
+
+TSubclassOf<UCustomObject> TestSubclassObject = 
+    UCustomObject::StaticClass();
+
+UCustomObject* TestCustomObject = 
+    NewObject<UCustomObject>(GetWorld(),TestSubclassObject);
+
+////////////////////////////////////////////////////////////////////////////////
+
+UCustomObject* TestCustomObject = 
+    NewObject<UCustomObject>(GetWorld(),UCustomObject::StaticClass());
+
+////////////////////////////////////////////////////////////////////////////////
+
+在虚幻引擎中，TSubclassOf 是一个模板类，用于引用一个类的类型信息。
+它主要用于在运行时引用类的类型，而无需知道具体的类类型。
+这对于反射（reflection）和相关机制非常重要，因为它们需要在运行时查询和操作类型信息。
+
+////////////////////////////////////////////////////////////////////////////////
+
+TSubclassOf<UCustomObject> 是什么？
+
+TSubclassOf<UCustomObject> 是一个类型别名，它指向 UCustomObject 类或其任何子类。
+这意味着你可以使用 TSubclassOf<UCustomObject> 来引用 UCustomObject 类型或从 UCustomObject 派生的任何自定义类型。
+
+////////////////////////////////////////////////////////////////////////////////
+
+StaticClass() 返回的是什么？
+
+StaticClass() 是一个在所有虚幻类中定义的静态成员函数，它返回一个指向该类类型信息的 UClass 指针。
+UClass 是虚幻引擎中用于存储有关类元数据的类，包括类的名字、基类、属性、函数等。
+因此，UCustomObject::StaticClass() 返回的是指向 UCustomObject 类型的 UClass 对象的指针。
+
+////////////////////////////////////////////////////////////////////////////////
+
+代码为什么要这样写？
+
+在这个上下文中，代码这样写是为了创建一个 UCustomObject 类型的实例，同时允许在运行时动态地处理它的类型信息：
+TSubclassOf<UCustomObject> TestSubclassObject = UCustomObject::StaticClass(); 
+这行代码创建了一个 TSubclassOf<UCustomObject> 类型的对象 TestSubclassObject，它内部存储了指向 UCustomObject 的 UClass 对象的指针。
+这样，你就可以在运行时检查和操作 UCustomObject 的类型信息。
+
+UCustomObject* TestCustomObject = NewObject<UCustomObject>(GetWorld(), TestSubclassObject); 
+这行代码使用 NewObject 函数创建了一个新的 UCustomObject 实例。
+NewObject 函数的第一个参数是对象的所有者（在这个例子中是当前的世界），第二个参数是对象的类类型信息。
+通过传递 TestSubclassObject，你告诉 NewObject 函数创建一个与 TestSubclassObject 类型相同或兼容的对象。
+这允许你在运行时动态创建 UCustomObject 或其子类的实例。
+
+////////////////////////////////////////////////////////////////////////////////
+
+TestSubclassObject 是什么？
+
+TestSubclassObject 是一个 TSubclassOf<UCustomObject> 类型的对象，它存储了指向 UCustomObject 类型的 UClass 对象的指针。
+它用于在运行时引用 UCustomObject 的类型信息。
+
+为什么创建 TestCustomObject 的时候需要使用 TestSubclassObject？
+使用 TestSubclassObject 创建 TestCustomObject 的原因是为了确保类型安全并允许运行时类型检查。
+当你使用 TestSubclassObject 作为 NewObject 函数的参数时，你实际上是告诉虚幻引擎创建一个与 TestSubclassObject 类型兼容的对象。
+这样做可以确保即使在派生类中，你也能正确地创建和引用对象，同时保持类型信息的一致性。这在处理多态和反射时尤其重要。
+
+////////////////////////////////////////////////////////////////////////////////

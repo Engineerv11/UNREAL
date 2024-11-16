@@ -1,0 +1,34 @@
+////////////////////////////////////////////////////////////////////////////////
+
+[静态加载]
+
+复制引用
+/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Smoke.Blueprint_Effect_Smoke'
+
+加上 _C
+/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Smoke.Blueprint_Effect_Smoke_C'
+
+static ConstructorHelpers::FClassFinder<AActor> TestActor(TEXT("/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Smoke.Blueprint_Effect_Smoke_C'"));
+
+这里的NewActor是一个UClass实例，并不是一个Actor实例，NewActor保存了Actor Blueprint_Effect_Smoke_C的创建信息
+TSubclassOf<AActor> NewActor = TestActor.Class;
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+
+[动态加载]
+
+复制引用
+/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Fire.Blueprint_Effect_Fire'
+
+加上 _C
+/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Fire.Blueprint_Effect_Fire_C'
+
+TestClass保存了Actor Blueprint_Effect_Smoke_C的创建信息
+UClass* TestClass = LoadClass<AActor>(this, TEXT("/Script/Engine.Blueprint'/Game/StarterContent/Blueprints/Blueprint_Effect_Fire.Blueprint_Effect_Fire_C'"));
+AActor* TestActor = GetWorld()->SpawnActor<AActor>(TestClass, FVector::ZeroVector, FRotator::ZeroRotator);
+
+注意，不要在构造函数中使用以上代码，构造函数中调用GetWorld()返回值无效
+
+////////////////////////////////////////////////////////////////////////////////

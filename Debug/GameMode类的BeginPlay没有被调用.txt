@@ -1,0 +1,9 @@
+虚幻编辑器日志
+Mixing AGameState with AGameModeBase is not compatible
+将AGameState与AGameModeBase混合使用不兼容
+
+删除GameMode代码中的 GameStateClass = AMainInterfaceGameState::StaticClass();
+即，不要给GameStateClass赋值
+
+此外还会导致GameMode中的DefaultPawnClass的Tick不被调用
+DefaultPawnClass = AMainInterfacePawn::StaticClass();

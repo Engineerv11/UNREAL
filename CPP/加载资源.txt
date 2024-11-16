@@ -1,0 +1,32 @@
+////////////////////////////////////////////////////////////////////////////////
+
+[静态加载]
+
+// 加载静态网格模型
+static ConstructorHelpers::FObjectFinder<UStaticMesh> 
+TestStaticMesh(TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
+
+// 设置静态网格组件使用的静态网格模型
+NewMesh->SetStaticMesh(TestStaticMesh.Object);
+
+static ConstructorHelpers::FObjectFinder<UStaticMesh> TestStaticMesh(TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
+NewMesh->SetStaticMesh(TestStaticMesh.Object);
+
+static ConstructorHelpers::FObjectFinder<UParticleSystem> TestParticle(TEXT("/Script/Engine.ParticleSystem'/Game/StarterContent/Particles/P_Smoke.P_Smoke'"));
+NewParticle->SetTemplate(TestParticle.Object);
+
+static ConstructorHelpers::FObjectFinder<USoundWave> TestSound(TEXT("/Script/Engine.SoundWave'/Game/StarterContent/Audio/Smoke01.Smoke01'"));
+NewAudio->SetSound(TestSound.Object);
+
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+
+[动态加载]
+
+UStaticMesh* TestStaticMesh = 
+LoadObject<UStaticMesh>(nullptr, TEXT("/Script/Engine.StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'"));
+
+NewMesh->SetStaticMesh(TestStaticMesh);
+
+////////////////////////////////////////////////////////////////////////////////

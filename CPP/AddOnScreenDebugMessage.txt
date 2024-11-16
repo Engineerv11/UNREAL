@@ -1,0 +1,13 @@
+////////////////////////////////////////////////////////////////////////////////
+
+GEngine->AddOnScreenDebugMessage(-1,5.0f,FColor::Red,TEXT("Debug Info"));
+
+void UEngine::AddOnScreenDebugMessage(
+    uint64 Key,                     // 使用-1，一个唯一的键，用于防止多次添加同一消息
+    float TimeToDisplay,            // 信息在屏幕上显示的时间
+    FColor DisplayColor, 
+    const FString& DebugMessage, 
+    bool bNewerOnTop, 
+    const FVector2D& TextScale)
+
+////////////////////////////////////////////////////////////////////////////////
