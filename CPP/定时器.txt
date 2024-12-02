@@ -1,0 +1,19 @@
+
+#include "TimerManager.h"
+
+FTimerHandle TimerHandle;
+
+void TestPrint();
+
+void AMainCharacter::TestPrint()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Timer"));
+}
+
+GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMainCharacter::TestPrint, 1.7, true);
+
+if (TimerHandle.IsValid())
+{
+    GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+}
+

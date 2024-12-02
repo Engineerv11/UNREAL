@@ -1,0 +1,17 @@
+
+    DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTestOneParamDynamicMulti, FString, Text);
+
+	UPROPERTY(BlueprintAssignable)
+	FTestOneParamDynamicMulti OneParamDynamicMulti;
+
+    OneParamDynamicMulti.Broadcast("OneParamDynamicMulti");
+
+    创建对应的蓝图类
+    在 [Event BeginPlay] 中调用 [Bind Event to [委托名称]]
+    
+    [委托名称] 即 FTestOneParamDynamicMulti OneParamDynamicMulti;
+    
+    在这里是 [Bind Event to One Param Dynamic Multi]
+    
+    [Bind Event to [委托名称]] 的 Event 连接 自定义事件
+
